@@ -55,8 +55,10 @@ Public repositories can use the HTTPS URL instead of the SSH one.
 
 ```bash
 codex plugin marketplace add git@github.com:your-org/your-repo.git
-codex plugin add example-plugin@example-marketplace
+codex plugin install example-plugin@example-marketplace
 ```
+
+Alternatively, run `/plugins` in the Codex TUI to browse the registered marketplaces and install interactively.
 
 ### Antigravity CLI
 
