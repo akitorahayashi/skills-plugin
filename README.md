@@ -2,9 +2,9 @@
 
 A minimal template for one GitHub-installable Agent Skills plugin marketplace.
 The repository root is the marketplace root for Claude Code and Codex, and the
-`plugin/` directory is the plugin root for Claude Code, Antigravity CLI, and
-Codex. One shared `plugin/skills/` directory supplies every client; each
-manifest carries only client-specific identity.
+`plugin/` directory is the plugin root for both. One shared `plugin/skills/`
+directory supplies every client; each manifest carries only client-specific
+identity.
 
 ## Structure
 
@@ -21,9 +21,8 @@ skills-plugin/
 │   │       └── SKILL.md                  # one directory per skill; name comes from SKILL.md frontmatter
 │   ├── .claude-plugin/
 │   │   └── plugin.json                   # Claude Code manifest
-│   ├── .codex-plugin/
-│   │   └── plugin.json                   # Codex manifest
-│   └── plugin.json                       # Antigravity CLI manifest
+│   └── .codex-plugin/
+│       └── plugin.json                   # Codex manifest
 └── README.md
 ```
 
@@ -31,7 +30,7 @@ The marketplace manifests expose the plugin in this repository by pointing to
 `./plugin`. They are installation indexes only; the plugin body is not duplicated
 under a `plugins/` directory.
 
-`plugin/skills/` is shared across all three clients. Each manifest carries only
+`plugin/skills/` is shared across both clients. Each manifest carries only
 that client's identity; the skill body is never duplicated. Component files
 (`skills/`, and later `hooks/`, `agents/`, `commands/`, `.mcp.json`) live at the
 plugin root. Only `plugin.json` belongs inside `.claude-plugin/` and
@@ -43,9 +42,6 @@ plugin root. Only `plugin.json` belongs inside `.claude-plugin/` and
   `.claude-plugin/plugin.json` needs no `skills` field. Metadata like `author`,
   `homepage`, `repository`, `license`, and `keywords` is optional.
 - Codex — `.codex-plugin/plugin.json` declares `"skills": "./skills/"`.
-- Antigravity CLI — `plugin.json` is a closed schema: only `name` (required,
-  `^[a-zA-Z0-9-_]+$`) and `description` are valid. Skills are discovered from
-  `skills/`; do not add other fields.
 
 ## Customize
 
@@ -65,7 +61,6 @@ plugin root. Only `plugin.json` belongs inside `.claude-plugin/` and
    ```bash
    claude plugin validate .
    claude plugin validate ./plugin
-   agy plugin validate ./plugin
    ```
 
 ## Install
@@ -92,13 +87,4 @@ Codex installs the plugin from this repository's marketplace:
 ```bash
 codex plugin marketplace add owner/skills-plugin
 codex plugin add example-plugin@skills-plugin
-```
-
-### Antigravity CLI
-
-Antigravity stages the plugin from the path that it receives. The `plugin/`
-directory holds both `plugin.json` and `skills/`.
-
-```bash
-agy plugin install ./plugin
 ```
